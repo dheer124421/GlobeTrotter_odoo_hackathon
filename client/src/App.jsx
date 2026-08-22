@@ -12,6 +12,7 @@ import CitySearch from './pages/CitySearch';
 import TripBudget from './pages/TripBudget';
 import TripCalendar from './pages/TripCalendar';
 import PublicItinerary from './pages/PublicItinerary';
+import ProfileSettings from './pages/ProfileSettings';
 import './App.css';
 
 // Protected Route wrapper component
@@ -108,6 +109,14 @@ function App() {
             <Route
               path="/trips/:tripId/shared"
               element={<PublicItinerary />}
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfileSettings />
+                </ProtectedRoute>
+              }
             />
             {/* Fallback routing */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

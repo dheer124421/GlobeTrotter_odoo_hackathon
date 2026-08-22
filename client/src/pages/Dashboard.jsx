@@ -12,7 +12,8 @@ import {
     Plus,
     User,
     DollarSign,
-    ChevronDown
+    ChevronDown,
+    Settings
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -178,6 +179,10 @@ const Dashboard = () => {
                                     <p className="user-email">{user ? user.email : ''}</p>
                                 </div>
                                 <hr className="dropdown-divider" />
+                                <Link to="/profile" className="dropdown-item" style={{ textDecoration: 'none' }}>
+                                    <Settings size={16} style={{ marginRight: '8px' }} />
+                                    Profile & Settings
+                                </Link>
                                 <Link to="/trips" className="dropdown-item" style={{ textDecoration: 'none' }}>
                                     <Compass size={16} style={{ marginRight: '8px' }} />
                                     My Trips (List View)

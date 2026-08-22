@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Trip from '../models/Trip.js';
 
 // Helper to sign JWT token
 const generateToken = (id) => {
@@ -106,6 +107,72 @@ export const getMe = async (req, res) => {
         } else {
             res.status(404).json({ status: 'error', message: 'User profile not found' });
         }
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
+
+// @desc    Update user profile settings
+// @route   PUT /api/auth/profile
+// @access  Private
+export const updateProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ status: 'error', message: 'User not found' });
+        }
+
+        const { firstName, lastName, email, phone, city, country, language, profilePhoto } = req.body;
+
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.email = email || user.email;
+        user.phone = phone || user.phone;
+        user.city = city || user.city;
+        user.country = country || user.country;
+        user.language = language || user.language;
+        if (profilePhoto !== undefined) {
+            user.profilePhoto = profilePhoto;
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            status: 'success',
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone,
+                city: user.city,
+                country: user.country,
+                language: user.language,
+                profilePhoto: user.profilePhoto,
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
+
+// @desc    Delete user account and all trips
+// @route   DELETE /api/auth/profile
+// @access  Private
+export const deleteAccount = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        // Cascade delete all trips belonging to this user
+        await Trip.deleteMany({ user: userId });
+
+        // Delete user
+        await User.findByIdAndDelete(userId);
+
+        res.status(200).json({
+            status: 'success',
+            message: 'User account and all trips deleted successfully'
+        });
     } catch (error) {
         res.status(500).json({ status: 'error', message: error.message });
     }

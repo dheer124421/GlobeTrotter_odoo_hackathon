@@ -46,6 +46,14 @@ const userSchema = new mongoose.Schema(
       type: String, // Stored as base64 string or URL
       default: '',
     },
+    language: {
+      type: String,
+      default: 'English',
+    },
+    savedDestinations: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,
