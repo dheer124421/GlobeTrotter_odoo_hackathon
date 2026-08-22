@@ -275,6 +275,12 @@ const ItineraryView = () => {
                                 <span>Budget Analytics</span>
                             </button>
                         )}
+                        {trip && (
+                            <button onClick={() => navigate(`/trips/${trip._id}/calendar`)} className="edit-opt-btn" style={{ background: 'var(--accent-bg)', border: '1px solid rgba(0, 102, 204, 0.15)', color: 'var(--accent)' }}>
+                                <Calendar size={16} />
+                                <span>Calendar View</span>
+                            </button>
+                        )}
                     </div>
 
                     <div className="view-mode-toggle-group">

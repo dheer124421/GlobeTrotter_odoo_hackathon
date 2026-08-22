@@ -1,0 +1,695 @@
+/* Trip Calendar & Timeline (Screen 11) CSS Stylesheet */
+
+.trip-calendar-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    box-sizing: border-box;
+}
+
+.trip-calendar-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+@media (prefers-color-scheme: dark) {
+    .trip-calendar-header {
+        background: rgba(22, 23, 29, 0.85);
+    }
+}
+
+.trip-calendar-main {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 2.5rem 4rem 2.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.trip-calendar-main .header-navigation-row {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.title-banner-area {
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.title-banner-area h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--text-h);
+    letter-spacing: -0.5px;
+}
+
+.date-span {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.calendar-message {
+    padding: 0.85rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.calendar-message.error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.calendar-message.success {
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.loading-wrapper {
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* Two column flexible split layout */
+.calendar-dynamic-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .calendar-dynamic-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Left Column Panel: Monthly Calendar */
+.calendar-card-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+    box-sizing: border-box;
+}
+
+.calendar-month-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.calendar-month-controls h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+    color: var(--text-h);
+    letter-spacing: -0.5px;
+}
+
+.month-control-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.month-control-btn:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Weekday header row */
+.weekday-header-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 750;
+    opacity: 0.6;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+/* 7-column Calendar grids */
+.calendar-days-cells-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-cell {
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-sizing: border-box;
+}
+
+.calendar-cell.cell-empty {
+    cursor: default;
+    border: none;
+    background: transparent;
+}
+
+.calendar-cell.cell-active:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.day-number-badge {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-h);
+}
+
+.trip-day-no-lbl {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent);
+    opacity: 0.85;
+    background: var(--accent-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+/* Highlights for trip range dates */
+.calendar-cell.trip-range {
+    background: rgba(0, 102, 204, 0.02);
+    border-color: rgba(0, 102, 204, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+    .calendar-cell.trip-range {
+        background: rgba(0, 102, 204, 0.05);
+        border-color: rgba(0, 102, 204, 0.25);
+    }
+}
+
+.calendar-cell.cell-selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+/* Activity dot inside grid cell */
+.cell-activities-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.8;
+    width: 100%;
+}
+
+.dot-pulse {
+    width: 6px;
+    height: 6px;
+    background: #ef4444;
+    /* active warning dot */
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.count-txt {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Right Column Panel: Expandable Day View Details */
+.day-details-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.no-day-selected-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    color: var(--text);
+    text-align: center;
+}
+
+.no-day-selected-state h4 {
+    margin: 0 0 6px 0;
+    font-size: 1.15rem;
+    color: var(--text-h);
+    font-weight: 700;
+}
+
+.no-day-selected-state p {
+    font-size: 0.875rem;
+    opacity: 0.65;
+    margin: 0;
+    max-width: 250px;
+}
+
+/* Day details header info */
+.details-header-row {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.details-header-row h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-h);
+}
+
+.trip-day-badge {
+    font-size: 0.775rem;
+    font-weight: 700;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.trip-day-badge.non-trip {
+    background: var(--border);
+    color: var(--text);
+    opacity: 0.7;
+}
+
+/* Timeline schedule reordering card */
+.activities-list-container h4 {
+    margin: 0 0 1rem 0;
+    font-weight: 750;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+}
+
+.empty-day-state-box {
+    background: var(--accent-bg);
+    border-radius: 12px;
+    padding: 2.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.empty-day-state-box p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.65;
+}
+
+.vertical-timeline-reorder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-activity-reorder-card {
+    display: flex;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.005);
+}
+
+/* Left controls column */
+.reorder-actions-col {
+    border-right: 1px solid var(--border);
+    background: var(--accent-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    padding: 4px;
+}
+
+.reorder-chevron-btn {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    opacity: 0.5;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.reorder-chevron-btn:hover:not(:disabled) {
+    opacity: 1;
+    background: rgba(0, 102, 204, 0.1);
+    color: var(--accent);
+}
+
+.reorder-chevron-btn:disabled {
+    opacity: 0.15;
+    cursor: not-allowed;
+}
+
+/* Main card contents */
+.activity-info-box {
+    flex-grow: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.act-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.act-title-row h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-h);
+}
+
+.item-price-tag {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-h);
+}
+
+.act-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.meta-capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.meta-capsule.category-tag {
+    text-transform: capitalize;
+    padding: 1px 8px;
+    border-radius: 8px;
+}
+
+.meta-capsule.category-tag.transport {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+.meta-capsule.category-tag.stay {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+}
+
+.meta-capsule.category-tag.activities {
+    background: rgba(236, 72, 153, 0.1);
+    color: #ec4899;
+}
+
+.meta-capsule.category-tag.meals {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.meta-capsule.category-tag.other {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}
+
+.stage-origin-lbl {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Edit and Delete operations */
+.activity-functional-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.meta-action-btn {
+    background: transparent;
+    border: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.5;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    transition: opacity 0.2s;
+}
+
+.meta-action-btn:hover {
+    opacity: 1;
+}
+
+.meta-action-btn.edit:hover {
+    color: var(--accent);
+}
+
+.meta-action-btn.trash:hover {
+    color: #ef4444;
+}
+
+/* Inline Edit Overlay Form */
+.inline-quick-edit-form {
+    flex-grow: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-input-row {
+    width: 100%;
+}
+
+.edit-input-row.double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.inline-quick-edit-form input,
+.inline-quick-edit-form select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.inline-quick-edit-form input:focus,
+.inline-quick-edit-form select:focus {
+    border-color: var(--accent);
+}
+
+.edit-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.save-edit-btn,
+.cancel-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.775rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.save-edit-btn {
+    background: var(--text-h);
+    color: #fff;
+}
+
+.cancel-edit-btn {
+    background: var(--accent-bg);
+    color: var(--text);
+}
+
+
+/* Logging form under day view */
+.detailed-day-quick-add-form {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.detailed-day-quick-add-form h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: var(--text-h);
+}
+
+.quick-add-timeline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-field-group {
+    width: 100%;
+}
+
+.input-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.quick-add-timeline-form input,
+.quick-add-timeline-form select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.quick-add-timeline-form input:focus,
+.quick-add-timeline-form select:focus {
+    border-color: var(--accent);
+}
+
+.submit-act-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--text-h);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 4px;
+}
+
+.submit-act-btn:hover {
+    background: var(--accent);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .trip-calendar-main {
+        padding: 0 1.5rem 3rem 1.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .trip-calendar-main {
+        padding: 0 1.25rem 2rem 1.25rem;
+    }
+
+    .calendar-card-panel,
+    .day-details-panel {
+        padding: 1.25rem;
+    }
+
+    .calendar-cell {
+        padding: 4px;
+    }
+
+    .day-number-badge {
+        font-size: 0.8rem;
+    }
+
+    .trip-day-no-lbl {
+        font-size: 0.6rem;
+        padding: 0 2px;
+    }
+
+    .cell-activities-indicator {
+        font-size: 0.55rem;
+    }
+}
