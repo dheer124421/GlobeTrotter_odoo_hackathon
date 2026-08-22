@@ -104,7 +104,7 @@ const Dashboard = () => {
     };
 
     const renderTripCard = (trip) => (
-        <div key={trip._id} className="trip-card">
+        <div key={trip._id} className="trip-card" onClick={() => navigate(`/trips/${trip._id}/itinerary`)} style={{ cursor: 'pointer' }}>
             <div className="trip-card-image">
                 {trip.coverPhoto ? (
                     <img src={trip.coverPhoto} alt={trip.name} />

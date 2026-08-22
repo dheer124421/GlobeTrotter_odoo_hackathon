@@ -41,6 +41,28 @@ const tripSchema = new mongoose.Schema(
             enum: ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'None'],
             default: 'None',
         },
+        itinerarySections: [
+            {
+                title: {
+                    type: String,
+                    default: 'New Section'
+                },
+                description: {
+                    type: String,
+                    default: ''
+                },
+                startDate: {
+                    type: Date
+                },
+                endDate: {
+                    type: Date
+                },
+                budget: {
+                    type: Number,
+                    default: 0
+                }
+            }
+        ]
     },
     {
         timestamps: true,

@@ -127,7 +127,7 @@ const TripList = () => {
     };
 
     const renderHorizontalCard = (trip) => (
-        <div key={trip._id} className="trip-wide-card">
+        <div key={trip._id} className="trip-wide-card" onClick={() => navigate(`/trips/${trip._id}/itinerary`)} style={{ cursor: 'pointer' }}>
             <div className="card-wide-gallery">
                 {trip.coverPhoto ? (
                     <img src={trip.coverPhoto} alt={trip.name} />

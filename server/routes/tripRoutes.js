@@ -1,5 +1,5 @@
 import express from 'express';
-import { createTrip, getTrips, deleteTrip } from '../controllers/tripController.js';
+import { createTrip, getTrips, deleteTrip, getTripById, updateItinerary } from '../controllers/tripController.js';
 import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -9,6 +9,8 @@ router.use(protect);
 
 router.post('/', createTrip);
 router.get('/', getTrips);
+router.get('/:id', getTripById);
+router.put('/:id/itinerary', updateItinerary);
 router.delete('/:id', deleteTrip);
 
 export default router;

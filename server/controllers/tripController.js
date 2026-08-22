@@ -139,3 +139,49 @@ export const deleteTrip = async (req, res) => {
         res.status(500).json({ status: 'error', message: error.message });
     }
 };
+
+// @desc    Get trip by ID
+// @route   GET /api/trips/:id
+// @access  Private
+export const getTripById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const trip = await Trip.findOne({ _id: id, user: req.user._id });
+        if (!trip) {
+            return res.status(404).json({ status: 'error', message: 'Trip not found or unauthorized' });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: trip
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
+
+// @desc    Update trip itinerary sections
+// @route   PUT /api/trips/:id/itinerary
+// @access  Private
+export const updateItinerary = async (req, res) => {
+    const { id } = req.params;
+    const { itinerarySections } = req.body;
+
+    try {
+        const trip = await Trip.findOne({ _id: id, user: req.user._id });
+        if (!trip) {
+            return res.status(404).json({ status: 'error', message: 'Trip not found or unauthorized' });
+        }
+
+        trip.itinerarySections = itinerarySections;
+        await trip.save();
+
+        res.status(200).json({
+            status: 'success',
+            data: trip
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
