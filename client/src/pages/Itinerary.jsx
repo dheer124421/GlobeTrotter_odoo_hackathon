@@ -13,7 +13,8 @@ import {
     Trash2,
     Save,
     Loader,
-    AlertCircle
+    AlertCircle,
+    Eye
 } from 'lucide-react';
 import './Itinerary.css';
 
@@ -184,13 +185,21 @@ const Itinerary = () => {
 
             {/* Main planner panels */}
             <main className="itinerary-main">
-                <div className="header-navigation-row">
-                    <button onClick={() => navigate('/dashboard')} className="back-link-btn">
-                        <ArrowLeft size={18} />
-                        <span>Back</span>
-                    </button>
+                <div className="header-navigation-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div className="nav-buttons-block" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <button onClick={() => navigate('/dashboard')} className="back-link-btn">
+                            <ArrowLeft size={18} />
+                            <span>Back</span>
+                        </button>
+                        {trip && (
+                            <button onClick={() => navigate(`/trips/${trip._id}/view`)} className="edit-opt-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)', padding: '6px 14px', borderRadius: '6px', fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer' }}>
+                                <Eye size={16} />
+                                <span>View Itinerary</span>
+                            </button>
+                        )}
+                    </div>
                     {trip && (
-                        <div className="trip-summary-title">
+                        <div className="trip-summary-title" style={{ margin: 0, width: 'auto', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <h2>Build Itinerary - {trip.name}</h2>
                             <span className="trip-badge">{trip.region}</span>
                         </div>

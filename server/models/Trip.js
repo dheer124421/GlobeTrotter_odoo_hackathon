@@ -60,7 +60,27 @@ const tripSchema = new mongoose.Schema(
                 budget: {
                     type: Number,
                     default: 0
-                }
+                },
+                activities: [
+                    {
+                        name: {
+                            type: String,
+                            required: [true, 'Activity name is required']
+                        },
+                        time: {
+                            type: String,
+                            default: '12:00 PM'
+                        },
+                        cost: {
+                            type: Number,
+                            default: 0
+                        },
+                        dayNumber: {
+                            type: Number,
+                            default: 1
+                        }
+                    }
+                ]
             }
         ]
     },

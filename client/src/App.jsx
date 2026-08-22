@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import CreateTrip from './pages/CreateTrip';
 import TripList from './pages/TripList';
 import Itinerary from './pages/Itinerary';
+import ItineraryView from './pages/ItineraryView';
 import './App.css';
 
 // Protected Route wrapper component
@@ -65,6 +66,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Itinerary />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/trips/:tripId/view"
+              element={
+                <ProtectedRoute>
+                  <ItineraryView />
                 </ProtectedRoute>
               }
             />
