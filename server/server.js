@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 
+import authRoutes from './routes/authRoutes.js';
+
 // Load env variables
 dotenv.config();
 
@@ -25,8 +27,8 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Placeholders for routes
-// app.use('/api/auth', authRoutes);
+// App routing
+app.use('/api/auth', authRoutes);
 // app.use('/api/trips', tripRoutes);
 
 // Global Error Handler Middleware
