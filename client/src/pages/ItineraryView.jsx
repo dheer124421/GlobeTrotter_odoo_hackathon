@@ -281,6 +281,20 @@ const ItineraryView = () => {
                                 <span>Calendar View</span>
                             </button>
                         )}
+                        {trip && (
+                            <button
+                                onClick={() => {
+                                    const shareUrl = `${window.location.origin}/trips/${trip._id}/shared`;
+                                    navigator.clipboard.writeText(shareUrl);
+                                    alert('Public share link copied to clipboard:\n' + shareUrl);
+                                }}
+                                className="edit-opt-btn"
+                                style={{ background: 'var(--accent-bg)', border: '1px solid rgba(0, 102, 204, 0.15)', color: 'var(--accent)' }}
+                            >
+                                <Eye size={16} />
+                                <span>Share Trip</span>
+                            </button>
+                        )}
                     </div>
 
                     <div className="view-mode-toggle-group">

@@ -11,6 +11,7 @@ import ItineraryView from './pages/ItineraryView';
 import CitySearch from './pages/CitySearch';
 import TripBudget from './pages/TripBudget';
 import TripCalendar from './pages/TripCalendar';
+import PublicItinerary from './pages/PublicItinerary';
 import './App.css';
 
 // Protected Route wrapper component
@@ -103,6 +104,10 @@ function App() {
                   <TripCalendar />
                 </ProtectedRoute>
               }
+            />
+            <Route
+              path="/trips/:tripId/shared"
+              element={<PublicItinerary />}
             />
             {/* Fallback routing */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -185,3 +185,76 @@ export const updateItinerary = async (req, res) => {
         res.status(500).json({ status: 'error', message: error.message });
     }
 };
+
+// @desc    Get trip by ID publicly
+// @route   GET /api/trips/:id/public
+// @access  Public
+export const getTripByIdPublic = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const trip = await Trip.findById(id);
+        if (!trip) {
+            return res.status(404).json({ status: 'error', message: 'Trip not found' });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: trip
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
+
+// @desc    Copy a public trip to current user
+// @route   POST /api/trips/:id/copy
+// @access  Private
+export const copyTrip = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const sourceTrip = await Trip.findById(id);
+        if (!sourceTrip) {
+            return res.status(404).json({ status: 'error', message: 'Source trip not found' });
+        }
+
+        // Clean section activity ObjectId references for new clones
+        const cleanSections = (sourceTrip.itinerarySections || []).map(sec => {
+            const cleanActs = (sec.activities || []).map(act => ({
+                name: act.name,
+                category: act.category || 'Activities',
+                time: act.time,
+                cost: act.cost,
+                dayNumber: act.dayNumber
+            }));
+            return {
+                title: sec.title,
+                description: sec.description,
+                startDate: sec.startDate,
+                endDate: sec.endDate,
+                budget: sec.budget,
+                activities: cleanActs
+            };
+        });
+
+        const clonedTrip = await Trip.create({
+            user: req.user._id,
+            name: `${sourceTrip.name} (Copy)`,
+            startDate: sourceTrip.startDate,
+            endDate: sourceTrip.endDate,
+            description: sourceTrip.description,
+            coverPhoto: sourceTrip.coverPhoto,
+            region: sourceTrip.region || 'None',
+            totalBudget: sourceTrip.totalBudget || 0,
+            itinerarySections: cleanSections
+        });
+
+        res.status(201).json({
+            status: 'success',
+            data: clonedTrip
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
