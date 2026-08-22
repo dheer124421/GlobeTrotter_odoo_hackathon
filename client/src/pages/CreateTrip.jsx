@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import {
@@ -196,6 +196,14 @@ const CreateTrip = () => {
                                     <p className="user-email">{user ? user.email : ''}</p>
                                 </div>
                                 <hr className="dropdown-divider" />
+                                <Link to="/dashboard" className="dropdown-item" style={{ textDecoration: 'none' }}>
+                                    <Compass size={16} style={{ marginRight: '8px' }} />
+                                    Dashboard
+                                </Link>
+                                <Link to="/trips" className="dropdown-item" style={{ textDecoration: 'none' }}>
+                                    <Compass size={16} style={{ marginRight: '8px' }} />
+                                    My Trips (List View)
+                                </Link>
                                 <button className="dropdown-item logout-btn" onClick={handleLogoutClick}>
                                     <LogOut size={16} style={{ marginRight: '8px' }} />
                                     Logout
@@ -213,7 +221,7 @@ const CreateTrip = () => {
                 <div className="header-row">
                     <button onClick={() => navigate('/dashboard')} className="back-link-btn">
                         <ArrowLeft size={18} />
-                        <span>Back to Dashboard</span>
+                        <span>Back</span>
                     </button>
                     <h2>Plan a new trip</h2>
                 </div>

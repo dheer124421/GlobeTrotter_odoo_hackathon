@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CreateTrip from './pages/CreateTrip';
+import TripList from './pages/TripList';
 import './App.css';
 
 // Protected Route wrapper component
@@ -47,6 +48,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CreateTrip />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/trips"
+              element={
+                <ProtectedRoute>
+                  <TripList />
                 </ProtectedRoute>
               }
             />

@@ -178,6 +178,10 @@ const Dashboard = () => {
                                     <p className="user-email">{user ? user.email : ''}</p>
                                 </div>
                                 <hr className="dropdown-divider" />
+                                <Link to="/trips" className="dropdown-item" style={{ textDecoration: 'none' }}>
+                                    <Compass size={16} style={{ marginRight: '8px' }} />
+                                    My Trips (List View)
+                                </Link>
                                 <button className="dropdown-item logout-btn" onClick={handleLogoutClick}>
                                     <LogOut size={16} style={{ marginRight: '8px' }} />
                                     Logout
