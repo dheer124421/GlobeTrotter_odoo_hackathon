@@ -49,6 +49,7 @@ const ItineraryView = () => {
     const [newActTime, setNewActTime] = useState('12:00 PM');
     const [newActCost, setNewActCost] = useState(0);
     const [newActDay, setNewActDay] = useState(1);
+    const [newActCategory, setNewActCategory] = useState('Activities');
 
     const fetchTrip = async () => {
         setLoading(true);
@@ -91,6 +92,7 @@ const ItineraryView = () => {
                             ...acts,
                             {
                                 name: newActName,
+                                category: newActCategory,
                                 time: newActTime,
                                 cost: Number(newActCost),
                                 dayNumber: Number(newActDay)
@@ -147,6 +149,7 @@ const ItineraryView = () => {
         setNewActTime('12:00 PM');
         setNewActCost(0);
         setNewActDay(1);
+        setNewActCategory('Activities');
     };
 
     // Compile all activities from all sections matching search/sort criteria grouped by Day
@@ -264,6 +267,12 @@ const ItineraryView = () => {
                             <button onClick={() => navigate(`/trips/${trip._id}/itinerary`)} className="edit-opt-btn">
                                 <Edit3 size={16} />
                                 <span>Edit Sections</span>
+                            </button>
+                        )}
+                        {trip && (
+                            <button onClick={() => navigate(`/trips/${trip._id}/budget`)} className="edit-opt-btn" style={{ background: 'var(--accent-bg)', border: '1px solid rgba(0, 102, 204, 0.15)', color: 'var(--accent)' }}>
+                                <Sliders size={16} />
+                                <span>Budget Analytics</span>
                             </button>
                         )}
                     </div>
@@ -483,6 +492,20 @@ const ItineraryView = () => {
                                         value={newActTime}
                                         onChange={(e) => setNewActTime(e.target.value)}
                                     />
+                                </div>
+
+                                <div className="log-input-group">
+                                    <label>Category:</label>
+                                    <select
+                                        value={newActCategory}
+                                        onChange={(e) => setNewActCategory(e.target.value)}
+                                    >
+                                        <option value="Activities">Activities</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="Stay">Stay/Accommodation</option>
+                                        <option value="Meals">Meals/Food</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 </div>
 
                                 <div className="log-input-group-row">

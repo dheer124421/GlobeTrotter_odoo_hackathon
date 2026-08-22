@@ -9,6 +9,7 @@ import TripList from './pages/TripList';
 import Itinerary from './pages/Itinerary';
 import ItineraryView from './pages/ItineraryView';
 import CitySearch from './pages/CitySearch';
+import TripBudget from './pages/TripBudget';
 import './App.css';
 
 // Protected Route wrapper component
@@ -83,6 +84,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CitySearch />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/trips/:tripId/budget"
+              element={
+                <ProtectedRoute>
+                  <TripBudget />
                 </ProtectedRoute>
               }
             />

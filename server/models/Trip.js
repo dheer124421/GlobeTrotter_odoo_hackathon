@@ -67,6 +67,11 @@ const tripSchema = new mongoose.Schema(
                             type: String,
                             required: [true, 'Activity name is required']
                         },
+                        category: {
+                            type: String,
+                            enum: ['Transport', 'Stay', 'Activities', 'Meals', 'Other'],
+                            default: 'Activities'
+                        },
                         time: {
                             type: String,
                             default: '12:00 PM'
