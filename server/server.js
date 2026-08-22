@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 
 import authRoutes from './routes/authRoutes.js';
+import tripRoutes from './routes/tripRoutes.js';
 
 // Load env variables
 dotenv.config();
@@ -29,7 +30,7 @@ app.get('/api/health', (req, res) => {
 
 // App routing
 app.use('/api/auth', authRoutes);
-// app.use('/api/trips', tripRoutes);
+app.use('/api/trips', tripRoutes);
 
 // Global Error Handler Middleware
 app.use((err, req, res, next) => {
