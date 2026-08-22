@@ -301,6 +301,15 @@ const Itinerary = () => {
                                 <span>Add another Section</span>
                             </button>
 
+                            <button
+                                className="add-section-action-btn"
+                                onClick={() => navigate(`/trips/${tripId}/search-cities`)}
+                                style={{ background: 'var(--accent-bg)', border: '1px solid rgba(0, 102, 204, 0.15)', color: 'var(--accent)' }}
+                            >
+                                <Compass size={18} />
+                                <span>Search & Add Cities (Discover)</span>
+                            </button>
+
                             <button className="save-itinerary-action-btn" onClick={handleSaveItinerary} disabled={saving}>
                                 {saving ? (
                                     <Loader className="spinner" size={18} />
